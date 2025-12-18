@@ -172,8 +172,8 @@ async function createGitHubIssue(housingList) {
 
 async function scrapeWebsite() {
   try {
-    const LYON_BOUNDS = '4.700_45.850_4.950_45.680';
-    const url = `https://trouverunlogement.lescrous.fr/tools/41/search?bounds=${LYON_BOUNDS}`;
+    // Correct Lyon URL - region code 42, bounds from official CROUS search
+    const url = 'https://trouverunlogement.lescrous.fr/tools/42/search?bounds=4.7718134_45.8082628_4.8983774_45.7073666';
     
     console.log('\n' + '═'.repeat(60));
     console.log(`🔍 CROUS Lyon Check - ${new Date().toISOString()}`);
