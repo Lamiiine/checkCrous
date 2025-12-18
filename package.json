@@ -1,0 +1,15 @@
+{
+  "name": "crous-lyon-scraper",
+  "version": "1.0.0",
+  "description": "Scraper pour les logements CROUS Lyon avec alertes email",
+  "main": "lyon-crous-scraper.js",
+  "scripts": {
+    "start": "node lyon-crous-scraper.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "nodemailer": "^6.9.7"
+  }
+}
+

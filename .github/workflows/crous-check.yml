@@ -1,0 +1,57 @@
+name: CROUS Lyon Housing Check
+
+on:
+  # Check every 5 minutes
+  schedule:
+    - cron: '*/5 * * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+
+  # Test on push
+  push:
+    branches: [main]
+
+# Need write permission to create issues
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check-housing:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      # Restore cache of previously seen offers
+      - name: Load offers cache
+        uses: actions/cache/restore@v4
+        with:
+          path: sent_offers.json
+          key: sent-offers-
+          restore-keys: sent-offers-
+      
+      - name: Check for housing
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: true
+        run: node lyon-crous-scraper.js
+      
+      # Save updated cache
+      - name: Save offers cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: sent_offers.json
+          key: sent-offers-${{ github.run_id }}
