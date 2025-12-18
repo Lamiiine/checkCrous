@@ -10,7 +10,7 @@ on:
 
   # Test on push
   push:
-    branches: [main]
+    branches: [main, master]
 
 # Need write permission to create issues
 permissions:
@@ -29,10 +29,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       
       # Restore cache of previously seen offers
       - name: Load offers cache
